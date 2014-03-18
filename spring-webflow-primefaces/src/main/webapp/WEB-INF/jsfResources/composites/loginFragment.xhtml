@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<h:form prependId="false">
+		<c:set target="#{loginManagedBean}" property="successPage"
+			value="#{cc.attrs.successPage}" />
+		<c:set target="#{loginManagedBean}" property="failPage"
+			value="#{cc.attrs.failPage}" />
+		<p:panel header="#{loginMsg.login}"
+			style="width: 430px; text-align: center; direction: #{langUtils.langDir};">
+			<h:panelGrid columns="2" style="margin-bottom: 8px;">
+				<p:outputLabel value="#{loginMsg.username}" for="j_username" />
+				<p:inputText id="j_username" required="true"
+					value="#{loginManagedBean.userName}"
+					requiredMessage="#{loginMsg.userNameEmpty}"
+					validatorMessage="#{loginMsg.invalidUsername}">
+					<f:validateRegex pattern="#{usernameValidRegexp}" />
+				</p:inputText>
+				<p:outputLabel value="#{loginMsg.password}" for="j_password" />
+				<p:password id="j_password" required="true"
+					value="#{loginManagedBean.password}"
+					requiredMessage="#{loginMsg.passwordEmpty}"
+					validatorMessage="#{loginMsg.invalidPassword}">
+					<f:validateRegex pattern="#{passwordValidRegexp}" />
+				</p:password>
+			</h:panelGrid>
+			<p align="left" style="width: 100%;">
+				<p:selectBooleanCheckbox id="_spring_security_remember_me"
+					value="#{loginManagedBean.rememberMe}" />
+				<p:outputLabel value="#{loginMsg.rememberMe}"
+					for="_spring_security_remember_me" />
+			</p>
+			<p:messages />
+			<c:choose>
+				<c:when test="#{cc.attrs.programmaticLogin}">
+					<p:commandButton value="#{loginMsg.login}" ajax="false"
+						action="#{loginManagedBean.programmaticLogin}" />
+				</c:when>
+				<c:otherwise>
+					<p:commandButton value="#{loginMsg.login}" type="submit"
+						ajax="false" action="#{loginManagedBean.login}" />
+				</c:otherwise>
+			</c:choose>
+		</p:panel>
+	</h:form>
+</ui:composition>

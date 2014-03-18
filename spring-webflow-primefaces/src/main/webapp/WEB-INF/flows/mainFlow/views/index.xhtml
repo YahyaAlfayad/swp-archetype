@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:comp="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<!-- 
+		Replace path to template, title, header and body
+		with actual data.
+	 -->
+<ui:composition
+	template="/WEB-INF/flows/mainFlow/template/template.xhtml">
+	<ui:define name="title">#{msg.title}</ui:define>
+	<ui:define name="content">
+		<div dir="#{langUtils.langDir}">
+			<h1>#{msg.welcomeMsg}</h1>
+			<p>Content goes here</p>
+			<img src="#{request.contextPath}/app/resources/welcome.png" />
+			<p>#{msg.hello}</p>
+			<p>
+				User name: #{sec.userName}<br /> Password: #{sec.password}<br />
+				isAuthenticated: #{sec.authenticated}<br /> authorities:
+				#{sec.authorities}<br /> is anonymous: #{sec.anonymous}<br /> is
+				remember me: #{sec.rememberMe}<br /> is fully authenticated:
+				#{sec.fullyAuthenticated}<br /> Remote IP: #{sec.remoteAddress}<br />
+				is localhost: #{sec.hasAddress('127.0.0.1')}<br /> has address of
+				192.168.1.1: #{sec.hasAddress('192.168.1.1')}<br /> is logged in:
+				#{!sec.anonymous}<br /> is Admin: #{sec.hasRole('ROLE_ADMIN')}<br />
+				has admin role: #{sec.hasAnyRole('ROLE_ADMIN, ROLE_USER')}<br />
+				has all roles admin, anonymous:
+				#{sec.hasAllRoles('ROLE_ADMIN,ROLE_ANONYMOUS')}
+			</p>
+		</div>
+		<comp:login />
+	</ui:define>
+</ui:composition>
+
+</html>
